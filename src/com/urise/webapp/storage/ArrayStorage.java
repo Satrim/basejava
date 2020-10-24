@@ -8,12 +8,21 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[5];
     private int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
+    }
+
+    public void update(String uuid) {
+        int index = numResume(uuid);
+        if (index > -1) {
+
+        }
+
+
     }
 
     public void save(Resume r) {
@@ -31,29 +40,25 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return storage[i];
-            }
-        }
-        return null;
+        if (numResume(uuid) > -1) {
+            return storage[numResume(uuid)];
+        } else return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                if (i == storage.length - 1) {
-                    storage[storage.length - 1] = null;
-                    size--;
-                    return;
-                }
-                for (int j = i + 1; j < size; j++) {
-                    storage[j - 1] = storage[j];
-                }
+        int index = numResume(uuid);
+        if (index > -1) {
+            if (index == storage.length - 1) {
+                storage[storage.length - 1] = null;
                 size--;
-                break;
+                return;
             }
+            for (int j = index + 1; j < size; j++) {
+                storage[j - 1] = storage[j];
+            }
+            size--;
         }
+
     }
 
     /**
@@ -66,4 +71,14 @@ public class ArrayStorage {
     public int size() {
         return size;
     }
+
+    int numResume(String uuid) {
+        for (int i = 0; i < size; i ++) {
+            if (uuid.equals(storage[i].getUuid())) {
+               return i;
+            }
+        }
+        return -1;
+    }
+
 }

@@ -52,6 +52,10 @@ public class MainArray {
                     ARRAY_STORAGE.clear();
                     printAll();
                     break;
+                case "update":
+                    ARRAY_STORAGE.update(uuid);
+                    printAll();
+                    break;
                 case "exit":
                     return;
                 default:
