@@ -2,13 +2,16 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[5];
+    private Resume[] storage = new Resume[10000];
     private int size = 0;
 
     public void clear() {
@@ -16,17 +19,21 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void update(String uuid) {
+    public void update(String uuid) throws IOException {
         int index = numResume(uuid);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         if (index > -1) {
-
+            System.out.print("Введите новое имя: ");
+            storage[index] = new Resume();
+            storage[index].setUuid(reader.readLine());
+        } else {
+            System.out.println("ERROR");
         }
-
-
     }
 
     public void save(Resume r) {
         if (r.getUuid() == null || size >= storage.length) {
+            System.out.println("ERROR");
             return;
         }
 
@@ -53,12 +60,13 @@ public class ArrayStorage {
                 size--;
                 return;
             }
-            for (int j = index + 1; j < size; j++) {
-                storage[j - 1] = storage[j];
+            for (int i = index + 1; i < size; i++) {
+                storage[i - 1] = storage[i];
             }
             size--;
+        } else {
+            System.out.println("ERROR");
         }
-
     }
 
     /**
@@ -73,12 +81,11 @@ public class ArrayStorage {
     }
 
     int numResume(String uuid) {
-        for (int i = 0; i < size; i ++) {
+        for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-               return i;
+                return i;
             }
         }
         return -1;
     }
-
 }
