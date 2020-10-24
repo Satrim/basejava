@@ -24,7 +24,6 @@ public class ArrayStorage {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         if (index > -1) {
             System.out.print("Введите новое имя: ");
-            storage[index] = new Resume();
             storage[index].setUuid(reader.readLine());
         } else {
             System.out.println("ERROR");
