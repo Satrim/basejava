@@ -2,16 +2,13 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int size = 0;
 
     public void clear() {
@@ -19,25 +16,29 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void update(String uuid) throws IOException {
-        int index = numResume(uuid);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public void update(Resume resume) {
+        int index = searchResume(resume.getUuid());
         if (index > -1) {
-            System.out.print("Введите новое имя: ");
-            storage[index].setUuid(reader.readLine());
+            storage[index] = resume;
         } else {
-            System.out.println("ERROR");
+            System.out.println("Резюме не найдено");
         }
     }
 
     public void save(Resume r) {
-        if (r.getUuid() == null || size >= storage.length) {
-            System.out.println("ERROR");
+        if (size >= storage.length) {
+            System.out.println("База резюме переполнена");
+            return;
+        }
+
+        if (r.getUuid() == null) {
+            System.out.println("Резюме задано некорректно");
             return;
         }
 
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(r.getUuid())) {
+                System.out.println("Такое резюме уже существует");
                 return;
             }
         }
@@ -46,25 +47,27 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (numResume(uuid) > -1) {
-            return storage[numResume(uuid)];
-        } else return null;
+        int index = searchResume(uuid);
+        if (index > -1) {
+            return storage[index];
+        } else {
+            System.out.println("Резюме не найдено");
+            return null;
+        }
     }
 
     public void delete(String uuid) {
-        int index = numResume(uuid);
+        int index = searchResume(uuid);
         if (index > -1) {
             if (index == storage.length - 1) {
                 storage[storage.length - 1] = null;
                 size--;
                 return;
             }
-            for (int i = index + 1; i < size; i++) {
-                storage[i - 1] = storage[i];
-            }
+            if (size - index + 1 >= 0) System.arraycopy(storage, index + 1, storage, index, size - index + 1);
             size--;
         } else {
-            System.out.println("ERROR");
+            System.out.println("Резюме не найдено");
         }
     }
 
@@ -79,7 +82,7 @@ public class ArrayStorage {
         return size;
     }
 
-    int numResume(String uuid) {
+    private int searchResume(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
