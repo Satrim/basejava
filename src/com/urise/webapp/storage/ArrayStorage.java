@@ -21,39 +21,36 @@ public class ArrayStorage {
         if (index > -1) {
             storage[index] = resume;
         } else {
-            System.out.println("Резюме не найдено");
+            System.out.println("Резюме с именем " + resume.getUuid() + " не найдено");
         }
     }
 
-    public void save(Resume r) {
+    public void save(Resume resume) {
         if (size >= storage.length) {
             System.out.println("База резюме переполнена");
             return;
         }
 
-        if (r.getUuid() == null) {
+        if (resume.getUuid() == null) {
             System.out.println("Резюме задано некорректно");
             return;
         }
 
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(r.getUuid())) {
-                System.out.println("Такое резюме уже существует");
-                return;
-            }
+        if (searchResume(resume.getUuid()) == -1) {
+            storage[size] = resume;
+            size++;
+        } else {
+            System.out.println("Резюме " + resume.getUuid() + " уже существует");
         }
-        storage[size] = r;
-        size++;
     }
 
     public Resume get(String uuid) {
         int index = searchResume(uuid);
         if (index > -1) {
             return storage[index];
-        } else {
-            System.out.println("Резюме не найдено");
-            return null;
         }
+        System.out.println("Резюме " + uuid + " не найдено");
+        return null;
     }
 
     public void delete(String uuid) {
@@ -64,16 +61,14 @@ public class ArrayStorage {
                 size--;
                 return;
             }
-            if (size - index + 1 >= 0) System.arraycopy(storage, index + 1, storage, index, size - index + 1);
+
+            if (size - index + 1 >= 0) System.arraycopy(storage, index + 1, storage, index + 1, size - index + 1);
             size--;
         } else {
-            System.out.println("Резюме не найдено");
+            System.out.println("Резюме " + uuid + " не найдено");
         }
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
