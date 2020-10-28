@@ -21,6 +21,15 @@ abstract public class AbstractArrayStorage implements Storage {
         return storage[index];
     }
 
+    public abstract void clear();
+
+    public abstract void update(Resume r);
+
+    public abstract void save(Resume r);
+
+    public abstract void delete(String uuid);
+
+    public abstract Resume[] getAll();
 
     protected abstract int getIndex(String uuid);
 
