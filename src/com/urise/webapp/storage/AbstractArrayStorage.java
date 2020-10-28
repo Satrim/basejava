@@ -33,4 +33,17 @@ abstract public class AbstractArrayStorage implements Storage {
 
     protected abstract int getIndex(String uuid);
 
+    // Не разобрался, что с этим делать
+
+//    protected void noNameMethod(Resume r, String uuid) {
+//        clear();
+//        update(r);
+//        save(r);
+//        delete(uuid);
+//        getAll();
+//        getIndex(uuid);
+//        size();
+//        get(uuid);
+//    }
+
 }

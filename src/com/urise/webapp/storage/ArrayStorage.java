@@ -8,12 +8,13 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    @Override
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index > -1) {
@@ -23,6 +24,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    @Override
     public void save(Resume resume) {
         if (size >= storage.length) {
             System.out.println("База резюме переполнена");
@@ -42,7 +44,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-
+    @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
         System.out.println("index " + index);
@@ -60,6 +62,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    @Override
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
