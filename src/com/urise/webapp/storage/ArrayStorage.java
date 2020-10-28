@@ -64,18 +64,18 @@ public class ArrayStorage extends AbstractArrayStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage[index];
-        }
-        System.out.println("Резюме " + uuid + " не найдено");
-        return null;
-    }
-
-    public int size() {
-        return size;
-    }
+//    public Resume get(String uuid) {
+//        int index = getIndex(uuid);
+//        if (index > -1) {
+//            return storage[index];
+//        }
+//        System.out.println("Резюме " + uuid + " не найдено");
+//        return null;
+//    }
+//
+//    public int size() {
+//        return size;
+//    }
 
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
