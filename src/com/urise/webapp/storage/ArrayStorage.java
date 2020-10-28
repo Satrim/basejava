@@ -8,8 +8,6 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-//    private Resume[] storage = new Resume[10_000];
-//    private int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -44,17 +42,10 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage[index];
-        }
-        System.out.println("Резюме " + uuid + " не найдено");
-        return null;
-    }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
+        System.out.println("index " + index);
         if (index > -1) {
             if (index == storage.length - 1) {
                 storage[storage.length - 1] = null;
@@ -62,7 +53,7 @@ public class ArrayStorage extends AbstractArrayStorage {
                 return;
             }
 
-            if (size - index + 1 >= 0) System.arraycopy(storage, index + 1, storage, index + 1, size - index + 1);
+            if (size - index + 1 >= 0) System.arraycopy(storage, index + 1, storage, index, size - index + 1);
             size--;
         } else {
             System.out.println("Резюме " + uuid + " не найдено");
@@ -71,6 +62,15 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
+    }
+
+    public Resume get(String uuid) {
+        int index = getIndex(uuid);
+        if (index > -1) {
+            return storage[index];
+        }
+        System.out.println("Резюме " + uuid + " не найдено");
+        return null;
     }
 
     public int size() {

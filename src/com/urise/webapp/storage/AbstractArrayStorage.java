@@ -21,6 +21,7 @@ abstract public class AbstractArrayStorage implements Storage {
         return storage[index];
     }
 
+
     protected abstract int getIndex(String uuid);
 
 }
