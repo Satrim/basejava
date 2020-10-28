@@ -7,9 +7,9 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10_000];
-    private int size = 0;
+public class ArrayStorage extends AbstractArrayStorage {
+//    private Resume[] storage = new Resume[10_000];
+//    private int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -17,7 +17,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int index = searchResume(resume.getUuid());
+        int index = getIndex(resume.getUuid());
         if (index > -1) {
             storage[index] = resume;
         } else {
@@ -36,7 +36,7 @@ public class ArrayStorage {
             return;
         }
 
-        if (searchResume(resume.getUuid()) == -1) {
+        if (getIndex(resume.getUuid()) == -1) {
             storage[size] = resume;
             size++;
         } else {
@@ -45,7 +45,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index = searchResume(uuid);
+        int index = getIndex(uuid);
         if (index > -1) {
             return storage[index];
         }
@@ -54,7 +54,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index = searchResume(uuid);
+        int index = getIndex(uuid);
         if (index > -1) {
             if (index == storage.length - 1) {
                 storage[storage.length - 1] = null;
@@ -77,7 +77,7 @@ public class ArrayStorage {
         return size;
     }
 
-    private int searchResume(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
