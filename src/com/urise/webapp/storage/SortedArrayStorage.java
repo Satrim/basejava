@@ -28,9 +28,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             System.out.println("База резюме заполнена");
         } else {
             index = (index * -1) - 1;
-            for (int i = size; i > index; i--) {
-                storage[i] = storage[i-1];
-            }
+            if (size - index >= 0) System.arraycopy(storage, index, storage, index + 1, size - index);
             storage[index] = r;
             size++;
         }
