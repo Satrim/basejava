@@ -7,11 +7,6 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (size == 0) {
@@ -23,15 +18,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             System.out.println("База резюме заполнена");
         } else {
             index = (index * -1) - 1;
-            if (size - index >= 0) System.arraycopy(storage, index, storage, index + 1, size - index);
+            for (int i = size; i > index; i--) {
+                storage[i] = storage[i-1];
+            }
             storage[index] = r;
             size++;
         }
-    }
-
-    @Override
-    public void delete(String uuid) {
-
     }
 
     @Override
