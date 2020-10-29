@@ -8,11 +8,11 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
+//    @Override
+//    public void clear() {
+//        Arrays.fill(storage, 0, size, null);
+//        size = 0;
+//    }
 
     @Override
     public void update(Resume resume) {
@@ -62,10 +62,10 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
+//    @Override
+//    public Resume[] getAll() {
+//        return Arrays.copyOf(storage, size);
+//    }
 
 //    public Resume get(String uuid) {
 //        int index = getIndex(uuid);

@@ -32,12 +32,12 @@ public class Resume implements Comparable<Resume>{
     }
 
     @Override
-    public String toString() {
-        return uuid;
+    public int compareTo(Resume o) {
+        return uuid.compareTo(o.uuid);
     }
 
     @Override
-    public int compareTo(Resume o) {
-        return uuid.compareTo(o.uuid);
+    public String toString() {
+        return uuid;
     }
 }
