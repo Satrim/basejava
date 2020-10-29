@@ -2,7 +2,6 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.AbstractArrayStorage;
-import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.SortedArrayStorage;
 
 import java.io.BufferedReader;
@@ -78,6 +77,7 @@ public class MainArray {
             for (Resume r : all) {
                 System.out.println(r);
             }
+            System.out.println("size: " + ARRAY_STORAGE.size());
         }
         System.out.println("----------------------------");
     }
