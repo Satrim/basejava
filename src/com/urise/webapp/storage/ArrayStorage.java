@@ -4,15 +4,9 @@ import com.urise.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    public void save(Resume r) {
-        if (checkIndex(r)) {
-            if (getIndex(r.getUuid()) == -1) {
-                storage[size] = r;
-                size++;
-            } else {
-                System.out.println("Резюме " + r.getUuid() + " уже существует");
-            }
-        }
+    public void checkSave(Resume r) {
+            storage[size] = r;
+            size++;
     }
 
     protected int getIndex(String uuid) {
