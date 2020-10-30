@@ -4,22 +4,14 @@ import com.urise.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    public void save(Resume resume) {
-        if (size >= STORAGE_LIMIT) {
-            System.out.println("База резюме переполнена");
-            return;
-        }
-
-        if (resume.getUuid() == null) {
-            System.out.println("Резюме задано некорректно");
-            return;
-        }
-
-        if (getIndex(resume.getUuid()) == -1) {
-            storage[size] = resume;
-            size++;
-        } else {
-            System.out.println("Резюме " + resume.getUuid() + " уже существует");
+    public void save(Resume r) {
+        if (checkIndex(r)) {
+            if (getIndex(r.getUuid()) == -1) {
+                storage[size] = r;
+                size++;
+            } else {
+                System.out.println("Резюме " + r.getUuid() + " уже существует");
+            }
         }
     }
 
