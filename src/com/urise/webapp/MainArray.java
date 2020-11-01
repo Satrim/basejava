@@ -40,7 +40,7 @@ public class MainArray {
                 case "save":
                     r = new Resume();
                     r.setUuid(uuid);
-                    ARRAY_STORAGE.checkSave(r);
+                    ARRAY_STORAGE.save(r);
                     printAll();
                     break;
                 case "delete":

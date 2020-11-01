@@ -60,7 +60,7 @@ abstract public class AbstractArrayStorage implements Storage {
         return storage[index];
     }
 
-    public void checkSave(Resume r) {
+    public void save(Resume r) {
         if (getIndex(r.getUuid()) > -1) {
             System.out.println("Резюме " + r.getUuid() + " уже существует");
         } else if (size >= STORAGE_LIMIT) {
@@ -68,11 +68,11 @@ abstract public class AbstractArrayStorage implements Storage {
         }else if (r.getUuid() == null) {
             System.out.println("Резюме задано некорректно");
         } else {
-            save(r);
+            checkSave(r);
         }
     }
 
-    public abstract void save(Resume r);
+    public abstract void checkSave(Resume r);
 
     protected abstract int getIndex(String uuid);
 }
