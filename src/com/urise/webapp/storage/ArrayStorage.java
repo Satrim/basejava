@@ -4,8 +4,8 @@ import com.urise.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    public void checkSave(Resume r) {
-            storage[size] = r;
+    public void checkSave(Resume resume) {
+            storage[size] = resume;
             size++;
     }
 
