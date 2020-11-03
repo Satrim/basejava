@@ -5,10 +5,10 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 abstract public class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 5;
+    static final int STORAGE_LIMIT = 5;
 
-    protected Resume[] storage = new Resume[STORAGE_LIMIT];
-    protected int size = 0;
+    Resume[] storage = new Resume[STORAGE_LIMIT];
+    int size = 0;
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
@@ -19,9 +19,7 @@ abstract public class AbstractArrayStorage implements Storage {
                 return;
             }
 
-            for (int i = index + 1; i < size; i++) {
-                storage[i - 1] = storage[i];
-            }
+            if (size - index + 1 >= 0) System.arraycopy(storage, index + 1, storage, index, size - index + 1);
             size--;
         } else {
             System.out.println("Резюме " + uuid + " не найдено");
@@ -53,26 +51,28 @@ abstract public class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("Резюме " + uuid + " не существует");
-            return null;
+        if (index > -1) {
+            return storage[index];
         }
-        return storage[index];
+        System.out.println("Резюме " + uuid + " не существует");
+        return null;
     }
 
     public void save(Resume resume) {
-        if (getIndex(resume.getUuid()) > -1) {
+        int index = getIndex(resume.getUuid());
+        if (index > -1) {
             System.out.println("Резюме " + resume.getUuid() + " уже существует");
         } else if (size >= STORAGE_LIMIT) {
             System.out.println("База резюме переполнена");
         }else if (resume.getUuid() == null) {
             System.out.println("Резюме задано некорректно");
         } else {
-            checkSave(resume);
+            addResume(resume, index);
+            size++;
         }
     }
 
-    public abstract void checkSave(Resume resume);
+    public abstract void addResume(Resume resume, int index);
 
-    protected abstract int getIndex(String uuid);
+    public abstract int getIndex(String uuid);
 }
