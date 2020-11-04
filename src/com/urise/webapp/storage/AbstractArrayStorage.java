@@ -18,8 +18,7 @@ abstract public class AbstractArrayStorage implements Storage {
                 size--;
                 return;
             }
-
-            if (size - index + 1 >= 0) System.arraycopy(storage, index + 1, storage, index, size - index + 1);
+            delResume(index);
             size--;
         } else {
             System.out.println("Резюме " + uuid + " не найдено");
@@ -71,6 +70,8 @@ abstract public class AbstractArrayStorage implements Storage {
             size++;
         }
     }
+
+    public abstract void delResume(int index);
 
     public abstract void addResume(Resume resume, int index);
 
