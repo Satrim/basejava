@@ -1,5 +1,9 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.IncorrectNameException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -22,7 +26,7 @@ abstract public class AbstractArrayStorage implements Storage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("Резюме " + uuid + " не найдено");
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -32,7 +36,7 @@ abstract public class AbstractArrayStorage implements Storage {
             storage[index] = resume;
             System.out.println("Резюме " + storage[index].getUuid() + " обновлено");
         } else {
-            System.out.println("Резюме с именем " + resume.getUuid() + " не найдено");
+            throw new NotExistStorageException(resume.getUuid());
         }
     }
 
@@ -54,19 +58,20 @@ abstract public class AbstractArrayStorage implements Storage {
         if (index > -1) {
             return storage[index];
         }
-        System.out.println("Резюме " + uuid + " не существует");
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index > -1) {
-            System.out.println("Резюме " + resume.getUuid() + " уже существует");
+            throw new ExistStorageException(resume.getUuid());
         } else if (size >= STORAGE_LIMIT) {
-            System.out.println("База резюме переполнена");
-        }else if (resume.getUuid() == null) {
-            System.out.println("Резюме задано некорректно");
-        } else {
+            throw new StorageException("База резюме переполнена ", resume.getUuid());
+        }else
+//            if (resume.getUuid() == null) {
+//            throw new IncorrectNameException(resume.getUuid());
+//        } else
+            {
             addResume(resume, index);
             size++;
         }
