@@ -99,4 +99,9 @@ public class AbstractArrayStorageTest{
             Assert.fail("переполнение произошло раньше времени");
         }
     }
+
+//    @Test
+//    public void getIncorrectName() {
+//
+//    }
 }
