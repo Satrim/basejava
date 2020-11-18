@@ -7,17 +7,17 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AbstractArrayStorageTest{
+public class AbstractArrayStorageTest {
 
     private static final int STORAGE_LIMIT = 10_000;
-    private Storage storage = new ArrayStorage();
+    private Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
 
-//    public AbstractArrayStorageTest(Storage storage){
-//        this.storage = storage;
-//    }
+    public AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -73,7 +73,7 @@ public class AbstractArrayStorageTest{
         Resume r = new Resume("uuid4");
         storage.save(r);
         Assert.assertEquals("uuid4", storage.get("uuid4").getUuid());
-        // Или так?
+        // Или так? Как правильней? Или оба варианта не правильно?
 
         Storage TestStorage = new ArrayStorage();
         TestStorage.save(new Resume("uuid1"));
@@ -88,11 +88,12 @@ public class AbstractArrayStorageTest{
         storage.get("asdf");
 
     }
+
     @Test(expected = StorageException.class)
     public void getOverflow() throws Exception {
         int i = storage.size();
-        for ( ; i < STORAGE_LIMIT; i++) {
-            storage.save(new Resume("uuid" + (i+1)));
+        for (; i < STORAGE_LIMIT; i++) {
+            storage.save(new Resume("uuid" + (i + 1)));
         }
         storage.save(new Resume("uuid6"));
         if (storage.size() <= STORAGE_LIMIT) {
