@@ -7,14 +7,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AbstractArrayStorageTest {
+public abstract class AbstractArrayStorageTest {
 
     private static final int STORAGE_LIMIT = 10_000;
     private Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
-
+    private static final String UUID_4 = "uuid4";
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -27,13 +27,10 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_3));
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete("uuid2");
-        Storage TestStorage = new ArrayStorage();
-        TestStorage.save(new Resume("uuid1"));
-        TestStorage.save(new Resume("uuid3"));
-        Assert.assertArrayEquals(TestStorage.getAll(), storage.getAll());
+        storage.get("uuid2");
     }
 
     @Test
@@ -51,11 +48,10 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
-        Storage TestStorage = new ArrayStorage();
-        TestStorage.save(new Resume("uuid1"));
-        TestStorage.save(new Resume("uuid2"));
-        TestStorage.save(new Resume("uuid3"));
-        Assert.assertArrayEquals(TestStorage.getAll(), storage.getAll());
+        Assert.assertEquals(storage.get("uuid1").getUuid(), "uuid1");
+        Assert.assertEquals(storage.get("uuid2").getUuid(), "uuid2");
+        Assert.assertEquals(storage.get("uuid3").getUuid(), "uuid3");
+        Assert.assertEquals(3, storage.size());
     }
 
     @Test
@@ -101,8 +97,4 @@ public class AbstractArrayStorageTest {
         }
     }
 
-//    @Test
-//    public void getIncorrectName() {
-//
-//    }
 }
