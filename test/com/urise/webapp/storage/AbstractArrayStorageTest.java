@@ -9,12 +9,12 @@ import org.junit.Test;
 
 public abstract class AbstractArrayStorageTest {
 
-    private static final int STORAGE_LIMIT = 10_000;
+    private static final int STORAGE_LIMIT = 5;
     private Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -38,6 +38,11 @@ public abstract class AbstractArrayStorageTest {
         Resume newResume = new Resume("uuid2");
         storage.update(newResume);
         Assert.assertSame(newResume, storage.get("uuid2"));
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExistResume() {
+        storage.update(new Resume("dummy"));
     }
 
     @Test
@@ -66,35 +71,31 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-        Resume r = new Resume("uuid4");
-        storage.save(r);
+        storage.save(new Resume("uuid4"));
         Assert.assertEquals("uuid4", storage.get("uuid4").getUuid());
-        // Или так? Как правильней? Или оба варианта не правильно?
+    }
 
-        Storage TestStorage = new ArrayStorage();
-        TestStorage.save(new Resume("uuid1"));
-        TestStorage.save(new Resume("uuid2"));
-        TestStorage.save(new Resume("uuid3"));
-        TestStorage.save(new Resume("uuid4"));
-        Assert.assertArrayEquals(TestStorage.getAll(), storage.getAll());
+    @Test (expected = NullPointerException.class)
+    public void saveNull() {
+        Resume resume = null;
+        storage.save(resume);
     }
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
-        storage.get("asdf");
-
+        storage.get("dummy");
     }
 
     @Test(expected = StorageException.class)
     public void getOverflow() throws Exception {
         int i = storage.size();
         for (; i < STORAGE_LIMIT; i++) {
-            storage.save(new Resume("uuid" + (i + 1)));
+            try {
+                storage.save(new Resume("uuid" + (i + 1)));
+            } catch (StorageException e) {
+                Assert.fail("переполнение произошло раньше времени");
+            }
         }
-        storage.save(new Resume("uuid6"));
-        if (storage.size() <= STORAGE_LIMIT) {
-            Assert.fail("переполнение произошло раньше времени");
-        }
+        storage.save(new Resume("uuid" + i + 2));
     }
-
 }

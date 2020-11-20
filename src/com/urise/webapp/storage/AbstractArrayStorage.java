@@ -9,7 +9,7 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 abstract public class AbstractArrayStorage implements Storage {
-    static final int STORAGE_LIMIT = 10_000;
+    static final int STORAGE_LIMIT = 5;
 
     Resume[] storage = new Resume[STORAGE_LIMIT];
     int size = 0;
@@ -67,11 +67,7 @@ abstract public class AbstractArrayStorage implements Storage {
             throw new ExistStorageException(resume.getUuid());
         } else if (size >= STORAGE_LIMIT) {
             throw new StorageException("База резюме переполнена ", resume.getUuid());
-        }else
-//            if (resume.getUuid() == null) {
-//            throw new IncorrectNameException(resume.getUuid());
-//        } else
-            {
+        } else {
             addResume(resume, index);
             size++;
         }
