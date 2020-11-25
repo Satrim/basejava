@@ -34,15 +34,6 @@ public class MainReflection {
 
         System.out.println();
         System.out.println(r);
-
-        AbstractArrayStorage storage = new ArrayStorage();
-        Class cs = AbstractArrayStorage.class;
-        Field[] fields = cs.getDeclaredFields();
-
-        System.out.println("_______________");
-
-        fields[1].setAccessible(true);
-
     }
 
 }
