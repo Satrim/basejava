@@ -9,7 +9,7 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 abstract public class AbstractArrayStorage implements Storage {
-    static final int STORAGE_LIMIT = 5;
+    static final int STORAGE_LIMIT = 10_000;
 
     Resume[] storage = new Resume[STORAGE_LIMIT];
     int size = 0;
