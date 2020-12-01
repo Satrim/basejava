@@ -56,7 +56,6 @@ public class MainArray {
                     break;
                 case "update":
                     r = new Resume(uuid);
-//                    r.setUuid(uuid);
                     ARRAY_STORAGE.update(r);
                     printAll();
                     break;
