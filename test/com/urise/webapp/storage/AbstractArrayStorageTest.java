@@ -34,11 +34,9 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void NotHaveResumeForDelete() {
+    public void DeleteNotExistResume() {
         storage.delete(UUID_1);
-        storage.delete(UUID_2);
-        storage.delete(UUID_3);
-        storage.delete("deleteResume");
+        storage.delete(UUID_1);
     }
 
     @Test
@@ -103,7 +101,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = StorageException.class)
-    public void getOverflow() throws Exception {
+    public void saveOverflow() throws Exception {
         for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
             try {
                 storage.save(new Resume("uuid" + (i + 1)));
