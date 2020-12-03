@@ -10,9 +10,7 @@ import java.util.Arrays;
 
 abstract public class AbstractArrayStorage extends AbstractStorage {
     static final int STORAGE_LIMIT = 10_000;
-
     Resume[] storage = new Resume[STORAGE_LIMIT];
-    int size = 0;
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
@@ -47,10 +45,6 @@ abstract public class AbstractArrayStorage extends AbstractStorage {
 
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
-    }
-
-    public int size() {
-        return size;
     }
 
     public Resume get(String uuid) {
