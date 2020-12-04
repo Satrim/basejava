@@ -11,6 +11,11 @@ import java.util.Arrays;
 abstract public class AbstractArrayStorage extends AbstractStorage {
     static final int STORAGE_LIMIT = 10_000;
     Resume[] storage = new Resume[STORAGE_LIMIT];
+    int size = 0;
+
+    public int size() {
+        return size;
+    }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);

@@ -1,35 +1,77 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NameNullException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListStorage extends AbstractStorage {
-    @Override
+    private static List<Resume> storage = new ArrayList<>();
+    public int size() {
+        return storage.size();
+    }
+
     public void clear() {
-
+        storage.removeAll(storage);
     }
 
-    @Override
-    public void update(Resume r) {
-
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index > -1) {
+            storage.remove(index);
+            storage.add(index, resume);
+            System.out.println("Резюме " + storage.get(index).getUuid() + " обновлено");
+        } else {
+            throw new NotExistStorageException(resume.getUuid());
+        }
     }
 
-    @Override
-    public void save(Resume r) {
-
+    public void save(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index > -1) {
+            throw new ExistStorageException(resume.getUuid());
+        } else if (resume.getUuid() == null) {
+            throw new NameNullException();
+        } else {
+            storage.add(resume);
+        }
     }
 
-    @Override
+    private int getIndex(String uuid) {
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public Resume get(String uuid) {
-        return null;
+        int index = getIndex(uuid);
+        if (index > -1) {
+            return storage.get(index);
+        }
+        throw new NotExistStorageException(uuid);
     }
 
-    @Override
     public void delete(String uuid) {
-
+        int index = getIndex(uuid);
+        if (index > -1) {
+            storage.remove(index);
+        } else {
+            throw new NotExistStorageException(uuid);
+        }
     }
 
-    @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        Resume[] allResume = new Resume[storage.size()];
+        for (int i = 0; i < allResume.length; i++) {
+            allResume[i] = storage.get(i);
+        }
+        return allResume;
     }
 }
