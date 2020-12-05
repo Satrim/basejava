@@ -16,7 +16,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     public void clear() {
-        storage.removeAll(storage);
+        storage.clear();
     }
 
     public void update(Resume resume) {
