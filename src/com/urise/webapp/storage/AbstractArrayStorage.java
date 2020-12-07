@@ -9,7 +9,7 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 abstract public class AbstractArrayStorage extends AbstractStorage {
-    static final int STORAGE_LIMIT = 10_000;
+    static final int STORAGE_LIMIT = 5;
     Resume[] storage = new Resume[STORAGE_LIMIT];
     int size = 0;
 
@@ -17,30 +17,19 @@ abstract public class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            if (index == STORAGE_LIMIT - 1) {
-                storage[STORAGE_LIMIT - 1] = null;
-                size--;
-                return;
-            }
-            delResume(index);
-            storage[size - 1] = null;
+    public void deleteResume(int index) {
+        if (index == STORAGE_LIMIT - 1) {
+            storage[STORAGE_LIMIT - 1] = null;
             size--;
-        } else {
-            throw new NotExistStorageException(uuid);
+            return;
         }
+        delResume(index);
+        storage[size - 1] = null;
+        size--;
     }
 
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
-            storage[index] = resume;
-            System.out.println("Резюме " + storage[index].getUuid() + " обновлено");
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+    public void updateResume(Resume resume, int index) {
+        storage[index] = resume;
     }
 
     public void clear() {
@@ -52,19 +41,12 @@ abstract public class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
+    public Resume getResume(int index) {
+        return storage[index];
     }
 
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
-            throw new ExistStorageException(resume.getUuid());
-        } else if (size >= STORAGE_LIMIT) {
+    public void saveResume(Resume resume, int index) {
+        if (size >= STORAGE_LIMIT) {
             throw new StorageException("База резюме переполнена ", resume.getUuid());
         } else {
             addResume(resume, index);

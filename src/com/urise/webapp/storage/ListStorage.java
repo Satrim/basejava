@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
     private static List<Resume> storage = new ArrayList<>();
+
     public int size() {
         return storage.size();
     }
@@ -19,29 +20,20 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
-            storage.remove(index);
-            storage.add(index, resume);
-            System.out.println("Резюме " + storage.get(index).getUuid() + " обновлено");
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+    public void updateResume(Resume resume, int index) {
+        storage.remove(index);
+        storage.add(index, resume);
     }
 
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
-            throw new ExistStorageException(resume.getUuid());
-        } else if (resume.getUuid() == null) {
+    public void saveResume(Resume resume, int index) {
+        if (resume.getUuid() == null) {
             throw new NameNullException();
         } else {
             storage.add(resume);
         }
     }
 
-    private int getIndex(String uuid) {
+    public int getIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -50,21 +42,12 @@ public class ListStorage extends AbstractStorage {
         return -1;
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage.get(index);
-        }
-        throw new NotExistStorageException(uuid);
+    public Resume getResume(int index) {
+        return storage.get(index);
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            storage.remove(index);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    public void deleteResume(int index) {
+        storage.remove(index);
     }
 
     public Resume[] getAll() {
