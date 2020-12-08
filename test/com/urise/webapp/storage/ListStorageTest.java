@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NameNullException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
@@ -34,9 +35,13 @@ public class ListStorageTest {
         assertEquals(4, storage.size());
     }
 
-    @Test(expected = NameNullException.class)
-    public void saveNull() {
-        storage.save(null);
+//    @Test(expected = NameNullException.class)
+//    public void saveNull() {
+//        storage.save(null);
+//    }
+    @Test(expected = ExistStorageException.class)
+    public void saveExistResumeException() {
+        storage.save(new Resume(UUID_2));
     }
 
     @Test
@@ -56,13 +61,12 @@ public class ListStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void getNotExistResume() {
+    public void getNotExistException() {
         storage.get("NotExist");
     }
 
     @Test
     public void getAllResume() {
-        //пока буду возвращать массив для MainArray
         Resume[] resumes = new Resume[]{new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)};
         assertArrayEquals(resumes, storage.getAll());
         assertEquals(3, storage.size());
@@ -76,7 +80,7 @@ public class ListStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void DeleteNotExistResume() {
+    public void DeleteNotExistException() {
         storage.delete(UUID_1);
         storage.delete(UUID_1);
     }
@@ -89,7 +93,7 @@ public class ListStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void updateNotExistResume() {
+    public void updateNotExistException() {
         storage.update(new Resume("updateResume"));
     }
 }

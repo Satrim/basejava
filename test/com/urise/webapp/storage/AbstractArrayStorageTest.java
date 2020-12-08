@@ -35,10 +35,15 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void DeleteNotExistResume() {
+    public void DeleteNotExistException() {
         storage.delete(UUID_1);
         storage.delete(UUID_1);
     }
+
+//    @Test(expected = NameNullException.class)
+//    public void deleteNameNullException() {
+//        storage.delete(null);
+//    }
 
     @Test
     public void update() {
@@ -48,9 +53,14 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void updateNotExistResume() {
+    public void updateNotExistException() {
         storage.update(new Resume("dummy"));
     }
+
+//    @Test(expected = NameNullException.class)
+//    public void updateNameNullException() {
+//        storage.update(new Resume(null));
+//    }
 
     @Test
     public void clear() {
@@ -79,9 +89,15 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void getNotExist() {
+    public void getNotExistException() {
         storage.get("dummy");
     }
+
+
+//    @Test(expected = NameNullException.class)
+//    public void getNameNullResume() {
+//        storage.get(null);
+//    }
 
     @Test
     public void save() {
@@ -91,13 +107,13 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(4, storage.size());
     }
 
-    @Test(expected = NameNullException.class)
-    public void saveNull() {
-        storage.save(null);
-    }
+//    @Test(expected = NameNullException.class)
+//    public void saveNullException() {
+//        storage.save(null);
+//    }
 
     @Test(expected = ExistStorageException.class)
-    public void saveExistResume() {
+    public void saveExistResumeException() {
         storage.save(new Resume(UUID_2));
     }
 
