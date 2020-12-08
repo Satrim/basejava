@@ -2,7 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-public abstract class ArrayStorage extends AbstractArrayStorage {
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void delResume(int index) {
         storage[index] = storage[size - 1];
