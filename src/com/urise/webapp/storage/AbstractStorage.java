@@ -10,6 +10,9 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
+        if (resume.getUuid() == null) {
+            throw new NameNullException();
+        }
         if (index > -1) {
             throw new ExistStorageException(resume.getUuid());
         } else {
