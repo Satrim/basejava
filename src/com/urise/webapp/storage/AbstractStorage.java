@@ -1,18 +1,13 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NameNullException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (resume.getUuid() == null) {
-            throw new NameNullException();
-        }
         if (index > -1) {
             throw new ExistStorageException(resume.getUuid());
         } else {
@@ -22,9 +17,6 @@ public abstract class AbstractStorage implements Storage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (uuid == null) {
-            throw new NameNullException();
-        }
         if (index > -1) {
             deleteResume(index);
         } else {
@@ -34,9 +26,6 @@ public abstract class AbstractStorage implements Storage {
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (resume.getUuid() == null) {
-            throw new NameNullException();
-        }
         if (index > -1) {
             updateResume(resume, index);
             System.out.println("Резюме " + resume.getUuid() + " обновлено");
@@ -47,9 +36,6 @@ public abstract class AbstractStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (uuid == null) {
-            throw new NameNullException();
-        }
         if (index > -1) {
             return getResume(index);
         }
