@@ -1,16 +1,11 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NameNullException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -22,6 +17,7 @@ public class ListStorageTest {
 
     @Before
     public void setUp() {
+        storage.clear();
         storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
         storage.save(new Resume(UUID_3));
@@ -35,10 +31,6 @@ public class ListStorageTest {
         assertEquals(4, storage.size());
     }
 
-//    @Test(expected = NameNullException.class)
-//    public void saveNull() {
-//        storage.save(null);
-//    }
     @Test(expected = ExistStorageException.class)
     public void saveExistResumeException() {
         storage.save(new Resume(UUID_2));
@@ -62,7 +54,7 @@ public class ListStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExistException() {
-        storage.get("NotExist");
+        storage.get("getResume");
     }
 
     @Test

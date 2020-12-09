@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NameNullException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
@@ -40,11 +39,6 @@ public abstract class AbstractArrayStorageTest {
         storage.delete(UUID_1);
     }
 
-//    @Test(expected = NameNullException.class)
-//    public void deleteNameNullException() {
-//        storage.delete(null);
-//    }
-
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_2);
@@ -54,13 +48,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExistException() {
-        storage.update(new Resume("dummy"));
+        storage.update(new Resume("updateResume"));
     }
-
-//    @Test(expected = NameNullException.class)
-//    public void updateNameNullException() {
-//        storage.update(new Resume(null));
-//    }
 
     @Test
     public void clear() {
@@ -90,14 +79,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExistException() {
-        storage.get("dummy");
+        storage.get("getResume");
     }
-
-
-//    @Test(expected = NameNullException.class)
-//    public void getNameNullResume() {
-//        storage.get(null);
-//    }
 
     @Test
     public void save() {
@@ -106,11 +89,6 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertSame(resume, storage.get("saveResume"));
         Assert.assertEquals(4, storage.size());
     }
-
-//    @Test(expected = NameNullException.class)
-//    public void saveNullException() {
-//        storage.save(null);
-//    }
 
     @Test(expected = ExistStorageException.class)
     public void saveExistResumeException() {
