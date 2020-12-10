@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,6 +37,11 @@ public class ListStorageTest {
         storage.save(new Resume(UUID_2));
     }
 
+    @Test(expected = StorageException.class)
+    public void saveNullUuid() {
+        storage.save(new Resume(null));
+    }
+
     @Test
     public void size() {
         assertEquals(3, storage.size());
@@ -55,6 +61,11 @@ public class ListStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void getNotExistException() {
         storage.get("getResume");
+    }
+
+    @Test(expected = StorageException.class)
+    public void getNullUuid() {
+        storage.get(null);
     }
 
     @Test
@@ -77,6 +88,11 @@ public class ListStorageTest {
         storage.delete(UUID_1);
     }
 
+    @Test(expected = StorageException.class)
+    public void deleteNullUuid() {
+        storage.delete(null);
+    }
+
     @Test
     public void updateResume() {
         Resume newResume = new Resume(UUID_2);
@@ -87,5 +103,10 @@ public class ListStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void updateNotExistException() {
         storage.update(new Resume("updateResume"));
+    }
+
+    @Test(expected = StorageException.class)
+    public void updateNullUuid() {
+        storage.update(new Resume(null));
     }
 }

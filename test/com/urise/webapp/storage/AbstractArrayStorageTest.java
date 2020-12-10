@@ -39,6 +39,11 @@ public abstract class AbstractArrayStorageTest {
         storage.delete(UUID_1);
     }
 
+    @Test(expected = StorageException.class)
+    public void deleteNullUuid() {
+        storage.delete(null);
+    }
+
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_2);
@@ -49,6 +54,11 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void updateNotExistException() {
         storage.update(new Resume("updateResume"));
+    }
+
+    @Test(expected = StorageException.class)
+    public void updateNullUuid() {
+        storage.update(new Resume(null));
     }
 
     @Test
@@ -82,6 +92,11 @@ public abstract class AbstractArrayStorageTest {
         storage.get("getResume");
     }
 
+    @Test(expected = StorageException.class)
+    public void getNullUuid() {
+        storage.get(null);
+    }
+
     @Test
     public void save() {
         Resume resume = new Resume("saveResume");
@@ -93,6 +108,11 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = ExistStorageException.class)
     public void saveExistResumeException() {
         storage.save(new Resume(UUID_2));
+    }
+
+    @Test(expected = StorageException.class)
+    public void saveNullUuid() {
+        storage.save(new Resume(null));
     }
 
     @Test(expected = StorageException.class)
