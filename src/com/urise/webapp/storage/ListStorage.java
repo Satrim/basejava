@@ -44,6 +44,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     public Resume[] getAll() {
-        return storage.toArray(new Resume[storage.size()]);
+        return storage.toArray(new Resume[0]);
     }
 }
