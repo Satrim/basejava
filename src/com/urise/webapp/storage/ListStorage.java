@@ -19,8 +19,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     public void updateResume(Resume resume, int index) {
-        storage.remove(index);
-        storage.add(index, resume);
+        storage.set(index, resume);
     }
 
     public void saveResume(Resume resume, int index) {
@@ -45,10 +44,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     public Resume[] getAll() {
-        Resume[] allResume = new Resume[storage.size()];
-        for (int i = 0; i < allResume.length; i++) {
-            allResume[i] = storage.get(i);
-        }
-        return allResume;
+        return storage.toArray(new Resume[storage.size()]);
     }
 }
