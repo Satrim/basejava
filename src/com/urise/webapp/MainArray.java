@@ -12,9 +12,10 @@ import java.io.InputStreamReader;
  * (just run, no need to understand)
  */
 public class MainArray {
-    //    private final static AbstractStorage ARRAY_STORAGE = new ListStorage();
-    private final static AbstractStorage ARRAY_STORAGE = new ArrayStorage();
+    //        private final static AbstractStorage ARRAY_STORAGE = new ListStorage();
+//    private final static AbstractStorage ARRAY_STORAGE = new ArrayStorage();
 //    private final static AbstractStorage ARRAY_STORAGE = new SortedArrayStorage();
+    private final static AbstractStorage ARRAY_STORAGE = new MapStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -74,9 +75,9 @@ public class MainArray {
             System.out.println("Empty");
         } else {
             for (Resume r : all) {
-                System.out.println(r);
+                System.out.println(r + "\r\n");
             }
-            System.out.println("size: " + ARRAY_STORAGE.size());
+            System.out.println("size:   " + ARRAY_STORAGE.size());
         }
         System.out.println("----------------------------");
     }
