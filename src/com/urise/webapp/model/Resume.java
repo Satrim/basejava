@@ -10,7 +10,6 @@ public class Resume implements Comparable<Resume>{
 
     // Unique identifier
     private String uuid;
-    private int ID;
 
     public Resume() {
         this(UUID.randomUUID().toString());
@@ -22,14 +21,6 @@ public class Resume implements Comparable<Resume>{
 
     public String getUuid() {
         return uuid;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
     }
 
     @Override
@@ -52,6 +43,6 @@ public class Resume implements Comparable<Resume>{
 
     @Override
     public String toString() {
-        return "Resume: " + uuid + "\n\rID:     " + ID;
+        return uuid;
     }
 }
