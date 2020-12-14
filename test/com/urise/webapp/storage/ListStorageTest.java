@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ListStorageTest {
-    AbstractStorage storage = new ListStorage();
+    Storage storage = new ListStorage();
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
