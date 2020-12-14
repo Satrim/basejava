@@ -20,7 +20,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[index] = resume;
     }
 
-    public int getIndex(String uuid) {
+    public int getKey(String uuid) {
         Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }

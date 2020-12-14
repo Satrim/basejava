@@ -11,11 +11,11 @@ public abstract class AbstractStorage implements Storage {
         if (resume.getUuid() == null) {
             throw new StorageException("Имя задано некоректно", resume.getUuid());
         }
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
+        int searchKey = getKey(resume.getUuid());
+        if (searchKey > -1) {
             throw new ExistStorageException(resume.getUuid());
         } else {
-            saveResume(resume, index);
+            saveResume(resume, searchKey);
         }
     }
 
@@ -23,9 +23,9 @@ public abstract class AbstractStorage implements Storage {
         if (uuid == null) {
             throw new StorageException("Имя задано некоректно", uuid);
         }
-        int index = getIndex(uuid);
-        if (index > -1) {
-            deleteResume(index);
+        int searchKey = getKey(uuid);
+        if (searchKey > -1) {
+            deleteResume(searchKey);
         } else {
             throw new NotExistStorageException(uuid);
         }
@@ -35,9 +35,9 @@ public abstract class AbstractStorage implements Storage {
         if (resume.getUuid() == null) {
             throw new StorageException("Имя задано некоректно", resume.getUuid());
         }
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
-            updateResume(resume, index);
+        int searchKey = getKey(resume.getUuid());
+        if (searchKey > -1) {
+            updateResume(resume, searchKey);
             System.out.println("Резюме " + resume.getUuid() + " обновлено");
         } else {
             throw new NotExistStorageException(resume.getUuid());
@@ -48,14 +48,14 @@ public abstract class AbstractStorage implements Storage {
         if (uuid == null) {
             throw new StorageException("Имя задано некоректно", uuid);
         }
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return getResume(index);
+        int searchKey = getKey(uuid);
+        if (searchKey > -1) {
+            return getResume(searchKey);
         }
         throw new NotExistStorageException(uuid);
     }
 
-    public abstract int getIndex(String uuid);
+    public abstract int getKey(String uuid);
 
     public abstract void saveResume(Resume resume, int index);
 
