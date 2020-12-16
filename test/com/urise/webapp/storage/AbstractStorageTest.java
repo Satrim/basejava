@@ -13,13 +13,17 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class AbstractStorageTest {
+
     Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
+
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
+
+
     @Before
     public void setUp() {
         storage.clear();
@@ -84,10 +88,9 @@ public class AbstractStorageTest {
         assertEquals(3, storage.size());
     }
 
-    @Test(expected = NotExistStorageException.class)
+    @Test
     public void deleteResume() {
         storage.delete(UUID_2);
-        storage.get(UUID_2);
         assertEquals(2, storage.size());
     }
 
