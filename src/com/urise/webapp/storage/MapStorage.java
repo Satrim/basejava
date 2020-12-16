@@ -7,32 +7,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    private static Map<String, Resume> storage = new HashMap<>();
+    private static final Map<String, Resume> storage = new HashMap<>();
 
-     public int getKey(String uuid) {
-
-        return -1;
+    public Object getKey(String uuid) {
+        return storage.get(uuid);
     }
 
-    public void saveResume(Resume resume, int index) {
-
+    public void saveResume(Resume resume, Object key) {
+        storage.put(resume.getUuid(), resume);
     }
 
-    public void deleteResume(int index) {
-
+    public void deleteResume(Object key) {
+       storage.remove(key);
     }
 
-    public void updateResume(Resume resume, int index) {
-
+    public void updateResume(Resume resume, Object key) {
+        storage.put(resume.getUuid(), resume);
     }
 
-    public Resume getResume(int index) {
-
-        return null;
+    public Resume getResume(Object key) {
+        return (Resume) key;
     }
 
     public void clear() {
-
+        storage.clear();
     }
 
     public Resume[] getAll() {

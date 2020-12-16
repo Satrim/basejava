@@ -16,15 +16,15 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    public void updateResume(Resume resume, int index) {
-        storage.set(index, resume);
+    public void updateResume(Resume resume, Object index) {
+        storage.set((int) index, resume);
     }
 
-    public void saveResume(Resume resume, int index) {
+    public void saveResume(Resume resume, Object index) {
         storage.add(resume);
     }
 
-    public int getKey(String uuid) {
+    public Object getKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -33,12 +33,12 @@ public class ListStorage extends AbstractStorage {
         return -1;
     }
 
-    public Resume getResume(int index) {
-        return storage.get(index);
+    public Resume getResume(Object index) {
+        return storage.get((int) index);
     }
 
-    public void deleteResume(int index) {
-        storage.remove(index);
+    public void deleteResume(Object index) {
+        storage.remove((int) index);
     }
 
     public Resume[] getAll() {

@@ -7,61 +7,68 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    public void save(Resume resume) {
-        if (resume.getUuid() == null) {
-            throw new StorageException("Имя задано некоректно", resume.getUuid());
+    private void checkNull(String uuid) {
+        if (uuid == null) {
+            throw new StorageException("Имя задано некоректно", uuid);
         }
-        int searchKey = getKey(resume.getUuid());
-        if (searchKey > -1) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
+    }
+
+    public void save(Resume resume) {
+        checkNull(resume.getUuid());
+        Object searchKey = getKey(resume.getUuid());
+        if (searchKey instanceof Integer) {
+            if ((int) searchKey > -1) {
+                throw new ExistStorageException(resume.getUuid());
+            }
             saveResume(resume, searchKey);
         }
+        saveResume(resume, searchKey);
     }
 
     public void delete(String uuid) {
-        if (uuid == null) {
-            throw new StorageException("Имя задано некоректно", uuid);
-        }
-        int searchKey = getKey(uuid);
-        if (searchKey > -1) {
+        checkNull(uuid);
+        Object searchKey = getKey(uuid);
+        if (searchKey instanceof Integer) {
+            if ((int) searchKey == -1) {
+                throw new NotExistStorageException(uuid);
+            }
             deleteResume(searchKey);
-        } else {
-            throw new NotExistStorageException(uuid);
         }
+        deleteResume(uuid);
     }
 
     public void update(Resume resume) {
-        if (resume.getUuid() == null) {
-            throw new StorageException("Имя задано некоректно", resume.getUuid());
-        }
-        int searchKey = getKey(resume.getUuid());
-        if (searchKey > -1) {
+        checkNull(resume.getUuid());
+        Object searchKey = getKey(resume.getUuid());
+        if (searchKey instanceof Integer) {
+            if ((int) searchKey == -1) {
+                throw new ExistStorageException(resume.getUuid());
+            }
             updateResume(resume, searchKey);
             System.out.println("Резюме " + resume.getUuid() + " обновлено");
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
         }
+        updateResume(resume, searchKey);
     }
 
     public Resume get(String uuid) {
-        if (uuid == null) {
-            throw new StorageException("Имя задано некоректно", uuid);
-        }
-        int searchKey = getKey(uuid);
-        if (searchKey > -1) {
+        checkNull(uuid);
+        Object searchKey = getKey(uuid);
+        if (searchKey instanceof Integer) {
+            if ((int) searchKey == -1) {
+                throw new NotExistStorageException(uuid);
+            }
             return getResume(searchKey);
         }
-        throw new NotExistStorageException(uuid);
+        return getResume(searchKey);
     }
 
-    public abstract int getKey(String uuid);
+    public abstract Object getKey(String uuid);
 
-    public abstract void saveResume(Resume resume, int index);
+    public abstract void saveResume(Resume resume, Object key);
 
-    public abstract void deleteResume(int index);
+    public abstract void deleteResume(Object key);
 
-    public abstract void updateResume(Resume resume, int index);
+    public abstract void updateResume(Resume resume, Object key);
 
-    public abstract Resume getResume(int index);
+    public abstract Resume getResume(Object Key);
 }

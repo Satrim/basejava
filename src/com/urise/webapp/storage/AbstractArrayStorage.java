@@ -14,19 +14,19 @@ abstract public class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public void deleteResume(int index) {
-        if (index == STORAGE_LIMIT - 1) {
+    public void deleteResume(Object index) {
+        if ((int) index == STORAGE_LIMIT - 1) {
             storage[STORAGE_LIMIT - 1] = null;
             size--;
             return;
         }
-        delResume(index);
+        delResume((int) index);
         storage[size - 1] = null;
         size--;
     }
 
-    public void updateResume(Resume resume, int index) {
-        storage[index] = resume;
+    public void updateResume(Resume resume, Object index) {
+        storage[(int) index] = resume;
     }
 
     public void clear() {
@@ -38,15 +38,15 @@ abstract public class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    public Resume getResume(int index) {
-        return storage[index];
+    public Resume getResume(Object index) {
+        return storage[(int) index];
     }
 
-    public void saveResume(Resume resume, int index) {
+    public void saveResume(Resume resume, Object index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("База резюме переполнена ", resume.getUuid());
         } else {
-            addResume(resume, index);
+            addResume(resume, (int) index);
             size++;
         }
     }
@@ -55,5 +55,5 @@ abstract public class AbstractArrayStorage extends AbstractStorage {
 
     public abstract void addResume(Resume resume, int index);
 
-    public abstract int getKey(String uuid);
+    public abstract Object getKey(String uuid);
 }
